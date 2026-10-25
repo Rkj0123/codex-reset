@@ -69,7 +69,7 @@ struct AppleScriptAutomation {
         proc.waitUntilExit()
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         guard proc.terminationStatus == 0 else {
-            let msg = String(data: data, encoding: .utf8) ?? "AppleScript 失败"
+            let msg = String(data: data, encoding: .utf8) ?? "AppleScript failed"
             throw JSONRPCError(code: -1, message: msg, data: nil)
         }
         return String(data: data, encoding: .utf8) ?? ""
@@ -107,7 +107,7 @@ final class AutoContinueEngine {
     ///   - command: 注入的指令（默认「继续」）
     ///   - fallbackToGUI: 是否允许回退 GUI 自动化
     func continueThread(client: AppServerClient?, threadId: String, failedTurnId: String? = nil, command: String, fallbackToGUI: Bool) async -> Bool {
-        var lastError = "无可用连接"
+        var lastError = "No available connection"
         lastFailureReason = nil
 
         // Path A1: 使用当前 app-server 客户端（优先桌面 control socket）
@@ -116,7 +116,7 @@ final class AutoContinueEngine {
                 handledFailures.record(threadId: threadId, failedTurnId: failedTurnId)
                 return true
             } else {
-                lastError = "app-server 通道失败"
+                lastError = "app-server channel failed"
             }
         }
 
@@ -129,9 +129,9 @@ final class AutoContinueEngine {
                     handledFailures.record(threadId: threadId, failedTurnId: failedTurnId)
                     return true
                 }
-                lastError = "桌面 app-server 通道失败"
+                lastError = "Desktop app-server channel failed"
             } catch {
-                lastError = "桌面 app-server 初始化失败: \(error)"
+                lastError = "Desktop app-server initialization failed: \(error)"
             }
         }
 
@@ -145,16 +145,16 @@ final class AutoContinueEngine {
                     handledFailures.record(threadId: threadId, failedTurnId: failedTurnId)
                     return true
                 } catch {
-                    lastError = "GUI 自动化失败: \(error)"
+                    lastError = "GUI automation failed: \(error)"
                 }
             } else {
                 let config = CodexConfig.load(codexHome: codexHome)
                 if config.remoteControlEnabled {
                     // remote_control 已启用但 Codex 未重启（control socket 未出现）→ 引导重启 Codex
-                    lastError = "辅助功能授权未生效，且 remote_control 已启用但 Codex 未重启。请重启 Codex 桌面 app，之后将走官方协议通道（无需辅助功能权限）；若仍要使用辅助功能，请在系统设置重新勾选授权（注意：重新打包会改变签名导致授权失效）"
+                    lastError = "Accessibility permission is not active, and remote_control is enabled but Codex has not restarted. Restart Codex to use the official protocol without Accessibility permission. To use GUI automation instead, re-enable Accessibility in System Settings (rebuilding the app may change its signature and invalidate permission)."
                     onNeedRestartCodex?()
                 } else {
-                    lastError = "辅助功能未授权，无法在 Codex 中输入。请在面板「辅助功能」状态点「授权」勾选本 App（若勾选过仍提示，请重新勾选一次）"
+                    lastError = "Accessibility permission is missing. Select Grant in the CodexReset Accessibility panel and enable this app in System Settings. If already enabled, toggle it off and on again."
                     onNeedAccessibility?()
                 }
             }
@@ -162,7 +162,7 @@ final class AutoContinueEngine {
 
         lastFailureReason = lastError
         if let err = lastAttemptError {
-            lastFailureReason = "\(lastError)（\(err)）"
+            lastFailureReason = "\(lastError) (\(err))"
         }
         onLog?("继续失败：\(lastFailureReason ?? lastError)", "Continue failed: \(lastFailureReason ?? lastError)")
         return false

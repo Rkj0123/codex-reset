@@ -6,7 +6,7 @@
 
 A tiny macOS menu-bar companion for the **Codex** desktop app. It watches your
 5-hour / 1-week usage windows, detects conversations that were paused because
-you hit your usage limit, and **automatically resumes them with “继续” (or any
+you hit your usage limit, and **automatically resumes them with “Continue” (or any
 command) the moment your usage is back** — so you never have to babysit the
 "upgrade / try again at HH:MM" wall again.
 
@@ -30,7 +30,7 @@ and says something like:
 > try again at 13:18.
 
 Usage resets on a rolling **5-hour window**, and every paused conversation has
-to be manually continued by switching to it and typing "继续". If you run
+to be manually continued by switching to it and typing "Continue". If you run
 several agents/projects at once, that's a lot of babysitting.
 
 **CodexReset does it for you.**
@@ -40,7 +40,7 @@ several agents/projects at once, that's a lot of babysitting.
 - **Menu-bar status** — live 5h / 1w usage bars, next-reset countdown, plan
   type and credit balance at a glance.
 - **Auto-resume** — when the 5h window resets, CodexReset automatically sends
-  "继续" to the conversations you've checked. Nothing is pre-selected: tick the
+  "Continue" to the conversations you've checked. Nothing is pre-selected: tick the
   paused conversations you care about (or hit "select all"), or add any other
   conversation from the full list.
 - **Browse all conversations** — every project and its conversations are listed
@@ -108,7 +108,7 @@ Then click the menu-bar icon to open the panel. Optionally:
 
 ## Keep Mac awake while a selected task is pending (opt-in)
 
-In Settings (gear icon), turn on **Prevent sleep while waiting** / **等待恢复时防止睡眠**.
+In Settings (gear icon), turn on **Prevent sleep while waiting**.
 
 - When auto-continue is enabled and a **checked** conversation's latest turn has failed with `usageLimitExceeded`, CodexReset temporarily prevents macOS **idle system sleep** while awaiting quota recovery.
 - It also holds the activity while a checked conversation is executing a turn (including after an automatic resume), to avoid going to sleep midway through the task.
@@ -119,11 +119,14 @@ The setting does not change system-wide macOS sleep preferences; it uses a tempo
 
 ## Configuration
 
+The app displays built-in UI copy, notifications, errors, and its default continuation command in English regardless of the macOS language. The previous Chinese default command is migrated to `Continue`; customized commands remain untouched.
+
+
 | Setting | Where |
 |---|---|
-| Auto-resume on/off | panel toggle `用量恢复后自动继续` |
-| Prevent idle sleep while selected tasks are pending/running | Settings gear → `等待恢复时防止睡眠` (off by default) |
-| Command sent | panel `指令` field (default `继续`) |
+| Auto-resume on/off | panel toggle `Auto-continue after usage resets` |
+| Prevent idle sleep while selected tasks are pending/running | Settings gear → `Prevent sleep while waiting` (off by default) |
+| Command sent | panel `Command` field (default `Continue`) |
 | Which conversations | checkbox list in the panel |
 | `remote_control` | panel toggle (writes `config.toml`) |
 | `CODEX_HOME` | env var overrides `~/.codex` (advanced) |
@@ -145,7 +148,7 @@ LANCZOS scaling). Replace `logo.png` and re-run `./make_app.sh`.
 
 PRs and issues are welcome. This project was reverse-engineered from local
 behavior and may break when Codex updates — please open an issue with the
-error and version. Use at your own risk; automated "继续" will consume usage in
+error and version. Use at your own risk; automated "Continue" will consume usage in
 the normal way within your plan.
 
 ## License

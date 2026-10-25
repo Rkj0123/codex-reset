@@ -22,14 +22,6 @@ struct SettingsPanelView: View {
         .background(Color(red: 0.95, green: 0.945, blue: 0.93))
     }
 
-    /// 语言选择绑定到 AppModel.language（切换后经 objectWillChange 刷新全界面）
-    private var languageBinding: Binding<String> {
-        Binding(
-            get: { self.model.language },
-            set: { self.model.language = $0 }
-        )
-    }
-
     /// 白色圆角卡片，装设置项
     private var settingsCard: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -44,23 +36,6 @@ struct SettingsPanelView: View {
             }
             .help(L("在概览中显示全部对话，可勾选任意对话参与自动继续",
                     "Show all chats in Overview so any chat can be selected for auto-continue."))
-
-            Divider()
-                .overlay(Color.black.opacity(0.05))
-
-            // 语言
-            HStack(spacing: 10) {
-                Text(L("语言", "Language"))
-                    .font(.subheadline)
-                Spacer()
-                Picker("", selection: languageBinding) {
-                    Text(L("跟随系统", "System")).tag("system")
-                    Text("中文").tag("zh")
-                    Text("English").tag("en")
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 205)
-            }
 
             Divider()
                 .overlay(Color.black.opacity(0.05))
