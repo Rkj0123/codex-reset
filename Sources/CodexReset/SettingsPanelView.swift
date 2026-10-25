@@ -20,6 +20,10 @@ struct SettingsPanelView: View {
         .padding(16)
         .frame(width: 340)
         .background(Color(red: 0.95, green: 0.945, blue: 0.93))
+        // This window uses a fixed light background. Without a matching color scheme,
+        // macOS Dark Mode makes primary/secondary labels nearly white and unreadable.
+        // Match ContentView's appearance so text, dividers and controls stay legible.
+        .preferredColorScheme(.light)
     }
 
     /// 白色圆角卡片，装设置项
