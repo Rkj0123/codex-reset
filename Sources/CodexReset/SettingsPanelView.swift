@@ -11,7 +11,7 @@ struct SettingsPanelView: View {
             HStack {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 15))
-                    .foregroundStyle(Color(red: 0.72, green: 0.33, blue: 0.10))
+                    .foregroundStyle(AppTheme.accent)
                 Text(L("设置", "Settings"))
                     .font(.headline)
             }
@@ -19,14 +19,12 @@ struct SettingsPanelView: View {
         }
         .padding(16)
         .frame(width: 340)
-        .background(Color(red: 0.95, green: 0.945, blue: 0.93))
-        // This window uses a fixed light background. Without a matching color scheme,
-        // macOS Dark Mode makes primary/secondary labels nearly white and unreadable.
-        // Match ContentView's appearance so text, dividers and controls stay legible.
-        .preferredColorScheme(.light)
+        .background(AppTheme.background)
+        // Force dark text/control semantics to match the explicit dark surfaces.
+        .preferredColorScheme(.dark)
     }
 
-    /// 白色圆角卡片，装设置项
+    /// Elevated dark settings card.
     private var settingsCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             // 显示全部对话
@@ -42,7 +40,6 @@ struct SettingsPanelView: View {
                     "Show all chats in Overview so any chat can be selected for auto-continue."))
 
             Divider()
-                .overlay(Color.black.opacity(0.05))
 
             // Scoped idle-sleep prevention for selected waiting/running chats
             VStack(alignment: .leading, spacing: 4) {
@@ -77,7 +74,6 @@ struct SettingsPanelView: View {
             }
 
             Divider()
-                .overlay(Color.black.opacity(0.05))
 
             // remote_control
             VStack(alignment: .leading, spacing: 3) {
@@ -101,11 +97,11 @@ struct SettingsPanelView: View {
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Color.white)
+                .fill(AppTheme.surface)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .strokeBorder(Color.black.opacity(0.07), lineWidth: 1)
+                .strokeBorder(AppTheme.border, lineWidth: 1)
         )
     }
 }

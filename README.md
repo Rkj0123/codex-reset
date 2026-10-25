@@ -119,6 +119,9 @@ The setting does not change system-wide macOS sleep preferences; it uses a tempo
 
 ## Configuration
 
+Both the menu-bar panel and Settings use a consistent high-contrast dark theme, even when macOS is set to Light Mode. Restart the app after rebuilding to apply the new appearance.
+
+
 The app displays built-in UI copy, notifications, errors, and its default continuation command in English regardless of the macOS language. The previous Chinese default command is migrated to `Continue`; customized commands remain untouched.
 
 
