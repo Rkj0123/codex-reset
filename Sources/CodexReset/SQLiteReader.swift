@@ -170,7 +170,7 @@ final class SQLiteReader {
         if let fb = fallbackTitle(threadId: threadId), !fb.isEmpty {
             return fb
         }
-        return stateTitle ?? "未命名对话"
+        return stateTitle ?? "Untitled chat"
     }
 
     private func threadTitle(threadId: String) -> String? {
